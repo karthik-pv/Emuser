@@ -1,11 +1,11 @@
 import React from "react";
 
-const Header = () => {
+const Genre = () => {
     return (
         <div className="pt-10 pb-10 text-center">
-            <h1 className="text-6xl text-white">Emuser</h1>
+            <h1 className="text-6xl text-white">Genre</h1>
         </div>
     )
 }
 
-export default Header
+export default Genre
