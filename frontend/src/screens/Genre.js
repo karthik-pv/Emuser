@@ -3,15 +3,22 @@ import { useState , useEffect } from "react";
 import axios from "axios";
 import Header from "../components/header";
 import {Link} from 'react-router-dom'
+import { useGenreContext } from "../context/GenreContext";
 import depp from "../assets/depp.jpeg"
+import sparrow from "../assets/sparrow.jpeg"
 
 const Genre = () => {
 
+    const [displayImg , setImg] = useState(depp)
     const [genresList , setGenresList] = useState([])
     const [genre , setGenre] = useState('.....')
 
+    const {GenreContextValue,updateGenreContextValue} = useGenreContext()
+
     const onGenreSelect = (event) => {
         setGenre(event.target.value)
+        updateGenreContextValue(event.target.value)
+        setImg(sparrow)
     }
 
     const fetchGenreList = async() => {
@@ -47,7 +54,7 @@ const Genre = () => {
             <div>
                 <p className="text-white pt-7 pb-3 text-3xl">The genre you have selected is <span className="text-5xl">{genre}</span></p>
             </div>
-            <img src={depp} width={400}></img>
+            <img src={displayImg} width={400}></img>
             <Link to={'/music'}>
                 <div>
                     <button className="bg-green-500 rounded-full p-3 mt-10 text-2xl">Get Music</button>

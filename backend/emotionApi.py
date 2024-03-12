@@ -14,6 +14,15 @@ emotion_mapper = {
     "fear" : ["fear" , "nervousness"]
 }
 
+statement_mapper = {
+    "joy" : "You seem to be in a joyful mood....that's gooooood.....let's celebrate and be happier together" ,
+    "sorrow" : "Looks like you feel down and out.....we all have those days.....allow me to make you feel better" ,
+    "anger" : "Yikes you're pissed off.....lets not do anything rash.....let me help you calm down" ,
+    "neutral" : "You're not having any strong feelings rn or maybe my AI model just crashed....anyway music isn't restricted to when you feel something",
+    "love" : "Awww....love is in the air.....very cute.....cheers to you",
+    "fear" : "You seem unsettled and worried.......allow me to comfort you with a musical touch"
+}
+
 def query(payload): 
     response = requests.post(API_URL, headers=headers, json=payload)
     try:
@@ -45,3 +54,7 @@ def determine_emotion(emoCounter,first):
 
 def get_emotions_list():
     return emotion_list
+
+def get_statement(emotion):
+    statement = statement_mapper.get(emotion, "No statement available for this emotion")
+    return statement

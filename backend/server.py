@@ -1,8 +1,8 @@
 from flask import Flask,jsonify,request
 from flask_cors import CORS
 from connectMongo import connectToDatabase
-from getMusic import getPlaylists,getSongs,getGenreList
-from emotionApi import query,get_emotions_list
+from getMusic import get_playlists,get_songs,getGenreList
+from emotionApi import query,get_emotions_list,get_statement
 
 app = Flask(__name__)
 CORS(app)
@@ -30,17 +30,22 @@ def getEmo():
 def getGenList():
     return jsonify({"list" : getGenreList()})
 
-@app.route('/getPlaylists',methods=['GET'])
+@app.route('/getStatement',methods=['POST'])
+def getEmoStatement():
+    emotion = request.json.get('emotion')
+    return jsonify({"statement" : get_statement(emotion)})
+
+@app.route('/getPlaylist',methods=['POST'])
 def getPlaylist():
     emotion = request.json.get('emotion')
     genre = request.json.get('genre')
-    return getPlaylists(db, genre, emotion)
+    return jsonify({"link" : get_playlists(db, genre, emotion)})
 
-@app.route('/getSongs',methods=['GET'])
+@app.route('/getSong',methods=['POST'])
 def getSongs():
     emotion = request.json.get('emotion')
     genre = request.json.get('genre')
-    return getSongs(db, genre, emotion)
+    return jsonify({"link" : get_songs(db, genre, emotion)})
 
 if __name__ == "__main__":
     app.run(debug=True)

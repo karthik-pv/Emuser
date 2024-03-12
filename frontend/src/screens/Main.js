@@ -2,11 +2,14 @@ import Header from "../components/header";
 import axios from "axios";
 import React , {useState , useEffect} from "react";
 import { Link } from "react-router-dom";
+import { useEmotionContext } from "../context/EmotionContext";
 
 const Main = () => {
+
     const [text, setText] = useState("")
     const [emotion, setEmotion] = useState(".....")
     const [emotionList , setEmotionList] = useState([])
+    const {EmotionContextValue , updateEmotionContextValue} = useEmotionContext();
 
     const handleTextData = (event) => {
         setText(event.target.value)
@@ -16,6 +19,7 @@ const Main = () => {
         const response = await axios.post('http://127.0.0.1:5000/getEmotion' , {"text" : text})
         const resEmotion = response.data.emotion
         setEmotion(resEmotion)
+        updateEmotionContextValue(resEmotion)
     }
 
     const fetchEmoList = async () => {
@@ -26,6 +30,7 @@ const Main = () => {
     const onOverride = async () => {
         const selectedEmotion = document.getElementById("emotionSelect").value;
         setEmotion(selectedEmotion)
+        updateEmotionContextValue(selectedEmotion)
     }
 
     useEffect(()=>{

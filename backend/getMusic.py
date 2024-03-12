@@ -1,6 +1,6 @@
 genreList = ["Rock" , "Metal" , "Grunge" , "Telugu" , "Hindi" , "Pop" , "Kannada" , "Instrumental" , "Themes"]
 
-def getPlaylists(db , genre , emotion):
+def get_playlists(db , genre , emotion):
     playlistsCol = db["Playlists"]
 
     query = { "genre" : genre , "emotion" : emotion }
@@ -11,11 +11,11 @@ def getPlaylists(db , genre , emotion):
     returnPlaylist = list(playlist)
     if returnPlaylist:
         returnPlaylist[0]['_id'] = str(returnPlaylist[0]['_id'])
-        return returnPlaylist[0]
+        return returnPlaylist[0]['link']
     else:
         return []
     
-def getSongs(db , genre , emotion):
+def get_songs(db , genre , emotion):
     songsCol = db["Songs"]
 
     query = { "genre": genre, "emotion": emotion}
@@ -26,7 +26,7 @@ def getSongs(db , genre , emotion):
     returnSong = list(song)
     if returnSong:
         returnSong[0]['_id'] = str(returnSong[0]['_id'])
-        return returnSong[0]
+        return returnSong[0]['link']
     else:
         return []
     
