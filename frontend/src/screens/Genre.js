@@ -2,18 +2,22 @@ import React from "react";
 import { useState , useEffect } from "react";
 import axios from "axios";
 import Header from "../components/header";
-import {Link} from 'react-router-dom'
+import {Link , useNavigate} from 'react-router-dom'
 import { useGenreContext } from "../context/GenreContext";
+import { useEmotionContext } from "../context/EmotionContext";
 import depp from "../assets/depp.jpeg"
 import sparrow from "../assets/sparrow.jpeg"
 
 const Genre = () => {
+
+    const navigate = useNavigate()
 
     const [displayImg , setImg] = useState(depp)
     const [genresList , setGenresList] = useState([])
     const [genre , setGenre] = useState('.....')
 
     const {GenreContextValue,updateGenreContextValue} = useGenreContext()
+    const {EmotionContextValue , updateEmotionContextValue} = useEmotionContext()
 
     const onGenreSelect = (event) => {
         setGenre(event.target.value)
@@ -29,6 +33,9 @@ const Genre = () => {
     const maxElementsPerRow = 5
 
     useEffect(()=>{
+        if(EmotionContextValue===''){
+            navigate('/main')
+        }
         fetchGenreList()
     },[])
 

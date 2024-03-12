@@ -3,6 +3,7 @@ from flask_cors import CORS
 from connectMongo import connectToDatabase
 from getMusic import get_playlists,get_songs,getGenreList
 from emotionApi import query,get_emotions_list,get_statement
+from spotifyInterface import get_track_details
 
 app = Flask(__name__)
 CORS(app)
@@ -13,7 +14,7 @@ def home():
     payload = "im happy asf"
     emotion = query(payload)
     genre = "Telugu"
-    return getPlaylists(db , genre , emotion)
+    return get_playlists(db , genre , emotion)
 
 @app.route('/getEmoList',methods=['GET'])
 def getEmoList():
@@ -46,6 +47,11 @@ def getSongs():
     emotion = request.json.get('emotion')
     genre = request.json.get('genre')
     return jsonify({"link" : get_songs(db, genre, emotion)})
+
+@app.route('/getTrackDeets',methods=['POST'])
+def getTrackDeets():
+    link = request.json.get('link')
+    return get_track_details(link)
 
 if __name__ == "__main__":
     app.run(debug=True)

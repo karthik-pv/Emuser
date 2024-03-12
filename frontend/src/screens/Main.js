@@ -30,7 +30,7 @@ const Main = () => {
     const onOverride = async () => {
         const selectedEmotion = document.getElementById("emotionSelect").value;
         setEmotion(selectedEmotion)
-        updateEmotionContextValue(selectedEmotion)
+        await updateEmotionContextValue(selectedEmotion)
     }
 
     useEffect(()=>{
