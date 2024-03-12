@@ -1,10 +1,63 @@
 import React from "react";
+import { useState , useEffect } from "react";
+import axios from "axios";
+import Header from "../components/header";
+import {Link} from 'react-router-dom'
+import depp from "../assets/depp.jpeg"
 
 const Genre = () => {
+
+    const [genresList , setGenresList] = useState([])
+    const [genre , setGenre] = useState('.....')
+
+    const onGenreSelect = (event) => {
+        setGenre(event.target.value)
+    }
+
+    const fetchGenreList = async() => {
+        const response = await axios.get('http://127.0.0.1:5000/getGenreList')
+        setGenresList(response.data.list)
+    }
+
+    const maxElementsPerRow = 5
+
+    useEffect(()=>{
+        fetchGenreList()
+    },[])
+
     return (
-        <div className="pt-10 pb-10 text-center">
-            <h1 className="text-6xl text-white">Genre</h1>
+        <div className="flex flex-col text-center items-center justify-center">
+            <Header/>
+            <div className="flex flex-wrap justify-center pt-10">
+                {genresList.map((genre, index) => (
+                <button
+                    key={index}
+                    className="bg-white rounded-full p-4 mt-2 text-2xl"
+                    style={{
+                    flexBasis: 'calc(20% - 10px)', // 20% width with 10px margin
+                    marginRight: index % maxElementsPerRow === maxElementsPerRow - 1 ? '0' : '10px',
+                    }}
+                    value={genre}
+                    onClick={onGenreSelect}
+                >
+                    {genre}
+                </button>
+                ))}
+            </div>
+            <div>
+                <p className="text-white pt-7 pb-3 text-3xl">The genre you have selected is <span className="text-5xl">{genre}</span></p>
+            </div>
+            <img src={depp} width={400}></img>
+            <Link to={'/music'}>
+                <div>
+                    <button className="bg-green-500 rounded-full p-3 mt-10 text-2xl">Get Music</button>
+                </div>
+            </Link>
+            <div className="pt-2">
+                <a className="text-white underline" href="https://github.com/karthik-pv">Developed by Jojo</a>
+            </div>
         </div>
+
     )
 }
 

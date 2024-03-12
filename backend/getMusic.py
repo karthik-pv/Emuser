@@ -1,3 +1,5 @@
+genreList = ["Rock" , "Metal" , "Grunge" , "Telugu" , "Hindi" , "Pop" , "Kannada" , "Instrumental" , "Themes"]
+
 def getPlaylists(db , genre , emotion):
     playlistsCol = db["Playlists"]
 
@@ -27,3 +29,6 @@ def getSongs(db , genre , emotion):
         return returnSong[0]
     else:
         return []
+    
+def getGenreList():
+    return genreList

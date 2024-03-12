@@ -35,7 +35,7 @@ const Main = () => {
     return (
         <div className="flex flex-col items-center">
             <Header/>
-            <h1 className="text-white pb-10">Describe the last event that you feel affected you emotionally and briefly your feelings</h1>
+            <h1 className="text-white pb-10">Describe the last event that you feel affected you emotionally and briefly describe your feelings</h1>
             <textarea className="w-1/2 p-4 border-2 rounded-md" value={text} onChange={handleTextData}></textarea>
             <button className="bg-green-500 rounded-full p-3 mt-10 text-2xl" onClick={onAnalyse} >Analyse</button>
             <div>
