@@ -1,11 +1,13 @@
 from flask import Flask,jsonify,request
 from flask_cors import CORS
+from dotenv import load_dotenv
 from connectMongo import connectToDatabase
 from getMusic import get_playlists,get_songs,getGenreList
 from emotionApi import query,get_emotions_list,get_statement
 from spotifyInterface import get_track_details
 
 app = Flask(__name__)
+load_dotenv()
 CORS(app)
 db = connectToDatabase()
 

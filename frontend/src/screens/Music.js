@@ -53,7 +53,6 @@ const Music = () => {
         }
     };
     
-    
     useEffect(()=>{
         if(EmotionContextValue===''){
             navigate('/')

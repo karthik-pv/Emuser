@@ -1,7 +1,8 @@
 import requests
+import os
 
-API_URL = "https://api-inference.huggingface.co/models/SamLowe/roberta-base-go_emotions"
-headers = {"Authorization": "Bearer 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"}
+API_URL = 'https://api-inference.huggingface.co/models/SamLowe/roberta-base-go_emotions'
+headers = {"Authorization": os.getenv("AUTH")}
 
 emotion_list = ["joy" , "sorrow" , "anger" , "neutral" ,"love" , "fear"]
 

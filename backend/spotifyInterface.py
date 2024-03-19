@@ -1,10 +1,11 @@
 from flask import jsonify
+import os
 import re
 import base64
 import requests
 
-CLIENT_ID = 'a01b6b14154b40708b3248ac5c490e50'
-CLIENT_SECRET = '98dc1fcc5a5340c2972b5de1aa3736fa'
+CLIENT_ID = os.getenv('CLIENT_ID')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 
 SPOTIFY_API_URL = 'https://api.spotify.com/v1'
 TOKEN_URL = 'https://accounts.spotify.com/api/token'

@@ -55,7 +55,7 @@ const Main = () => {
                 </select>
             </div>
             <div className="flex flex-row pt-5">
-                <button className="bg-red-700 rounded-full p-3 mt-10 text-2xl" onClick={onOverride}>Override</button>  
+                <button className="bg-red-700 rounded-full p-3 mt-10 text-2xl mr-10" onClick={onOverride}>Override</button>  
                 <Link to='/genre'>
                     <button className="bg-green-500 rounded-full p-3 mt-10 text-2xl">Proceed</button>
                 </Link>  
