@@ -48,7 +48,7 @@ const Genre = () => {
                     key={index}
                     className="bg-white rounded-full p-4 mt-2 text-2xl"
                     style={{
-                    flexBasis: 'calc(20% - 10px)', // 20% width with 10px margin
+                    flexBasis: 'calc(20% - 10px)',
                     marginRight: index % maxElementsPerRow === maxElementsPerRow - 1 ? '0' : '10px',
                     }}
                     value={genre}
