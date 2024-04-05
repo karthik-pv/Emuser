@@ -9,6 +9,7 @@ import { EmotionProvider } from './context/EmotionContext';
 import { GenreProvider } from './context/GenreContext';
 
 const App = () => {
+
 return (
   <EmotionProvider>
     <GenreProvider>

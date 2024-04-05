@@ -4,10 +4,14 @@ import axios from "axios"
 import { useEmotionContext } from "../context/EmotionContext";
 import { useGenreContext } from "../context/GenreContext";
 import { useNavigate } from "react-router-dom";
+import { baseURL } from "../api/Urls";
+import Footer from "../components/footer";
 
 const Music = () => {
     
     const navigate = useNavigate()
+
+    const [loading , setLoading] = useState(true);
 
     const [emotionStatement , setEmotionStatement] = useState('')
 
@@ -22,26 +26,26 @@ const Music = () => {
     const { GenreContextValue , updateGenreContextValue } = useGenreContext()
 
     const fetchStatement = async () => {
-        const response = await axios.post('http://127.0.0.1:5000/getStatement', {"emotion" : EmotionContextValue})
+        const response = await axios.post(baseURL+'/getStatement', {"emotion" : EmotionContextValue})
         const resStatement = response.data.statement
         await setEmotionStatement(resStatement)
     }
 
     const fetchMusic = async () => {
-        const songResponse = await axios.post('http://127.0.0.1:5000/getSong',{"emotion" : EmotionContextValue  , "genre" : GenreContextValue})
+        const songResponse = await axios.post(baseURL+'/getSong',{"emotion" : EmotionContextValue  , "genre" : GenreContextValue})
         const songLink = songResponse.data.link
         setMusicSongLink(songLink)
-        const playlistResponse = await axios.post('http://127.0.0.1:5000/getPlaylist',{"emotion" : EmotionContextValue , "genre" : GenreContextValue})
+        const playlistResponse = await axios.post(baseURL+'/getPlaylist',{"emotion" : EmotionContextValue , "genre" : GenreContextValue})
         const playlistLink = playlistResponse.data.link
         setMusicPlaylistLink(playlistLink)
+        setLoading(false)
     }
 
     const fetchSongDetails = async () => {
         try {
-            const detailsRes = await axios.post('http://127.0.0.1:5000/getTrackDeets', {"link": musicSongLink});
-            console.log(detailsRes); // Log detailsRes to check its structure
-    
-            // Access track details from the correct property
+            const detailsRes = await axios.post(baseURL+'/getTrackDeets', {"link": musicSongLink});
+            console.log(detailsRes); 
+
             const { artists, name, album } = detailsRes.data.track_details;
     
             const artistNames = artists.map(artist => artist.name).join(', ');
@@ -52,6 +56,12 @@ const Music = () => {
             console.error('Error fetching song details:', error.message);
         }
     };
+
+    const onceMore = () => {
+        updateEmotionContextValue('')
+        updateGenreContextValue('')
+        navigate('/')
+    }
     
     useEffect(()=>{
         if(EmotionContextValue===''){
@@ -61,20 +71,24 @@ const Music = () => {
             navigate('/')
         }
         fetchStatement()
-        fetchMusic()
+        fetchMusic()  
     },[])
 
     return (
         <div className="flex flex-col text-center items-center justify-center">
             <Header/>
+            { loading ? 
+            <p className="p-10 text-4xl text-white w-1/2">Loading...</p> 
+            :
             <p className="p-10 text-4xl text-white w-1/2">{emotionStatement}</p>
+            }
             <div className="flex flex-row">
-                <button className="bg-red-500 rounded-full p-4 mt-2 text-2xl mr-10" onClick={fetchSongDetails}>I don't like surprises</button>
-                <a href={`${musicSongLink}`}>
-                    <button className="bg-green-500 rounded-full p-4 mt-2 text-2xl mr-10">Surprise Me</button>
+                <button className="bg-red-500 rounded-full p-4 mt-2 text-2xl mr-10 transition duration-300 ease-in-out transform hover:scale-105" onClick={fetchSongDetails}>I don't like surprises</button>
+                <a href={`${musicSongLink}`} target="_blank">
+                    <button className="bg-green-500 rounded-full p-4 mt-2 text-2xl mr-10 transition duration-300 ease-in-out transform hover:scale-105">Surprise Me</button>
                 </a>
-                <a href={`${musicPlaylistLink}`}>
-                <button className="bg-yellow-500 rounded-full p-4 mt-2 text-2xl">Get Playlist</button>
+                <a href={`${musicPlaylistLink}`} target="_blank">
+                <button className="bg-yellow-500 rounded-full p-4 mt-2 text-2xl transition duration-300 ease-in-out transform hover:scale-105">Get Playlist</button>
                 </a>
             </div> 
             <div className="text-white pt-5">
@@ -82,9 +96,8 @@ const Music = () => {
                 <p>{detArtistName}</p>
                 <img src={albumCover} width={300}></img>
             </div>
-            <div className="pt-5">
-                <a className="text-white underline" href="https://github.com/karthik-pv">Developed by Jojo</a>
-            </div>
+            <button className="bg-white rounded-full p-4 mt-2 text-2xl transition duration-300 ease-in-out transform hover:scale-105" onClick={onceMore}>Once More</button>
+            <Footer/>
         </div>
     )
 }
