@@ -53,3 +53,7 @@ pipeline.fit(X_train, y_train)
 y_pred = pipeline.predict(X_test)
 
 print(classification_report(y_test, y_pred))
+
+# Model failed due to lack of quality dataset
+# Rebuild in a while
+# New dataset found - link - https://www.kaggle.com/datasets/shivamb/go-emotions-google-emotions-dataset
